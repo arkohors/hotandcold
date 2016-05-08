@@ -16,14 +16,18 @@ $(document).ready(function(){
   console.log(startingNum);  
 
 
-$('#guessButton').click(function(){
+    $('#guessButton').click(function(){
             //Guessed number
             guess = parseInt($('#userGuess').val());
             appendGuess(guess);
             hotCold(guess, startingNum);
-      });
-  		
+            clearField();
 
+      });
+  
+    $('.new').click(function(){
+      newGame();
+    });
 });
 
 
@@ -70,3 +74,17 @@ counter.innerHTML = 0;
 $('#guessButton').click(function(){
   counter.innerHTML++;
 });
+
+    function newGame() {
+      startingNum = Math.floor((Math.random() *100) +1);
+      console.log(startingNum);
+      counter.innerHTML = 0;
+      $('#guessList').empty();
+      document.getElementById('feedback').innerHTML = "Make Your Guess!";
+      clearField();
+    }
+
+  //clear field
+  function clearField(){
+    document.getElementById("userGuess").value ="";
+  }  
