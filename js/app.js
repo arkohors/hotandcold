@@ -12,16 +12,21 @@ $(document).ready(function(){
   		$(".overlay").fadeOut(1000);
   	});
 
-    startingNum = Math.floor((Math.random() *100) +1);
-  console.log(startingNum);  
 
+    newGame();
 
     $('#guessButton').click(function(){
-            //Guessed number
-            guess = parseInt($('#userGuess').val());
-            appendGuess(guess);
-            hotCold(guess, startingNum);
-            clearField();
+            var guess = parseInt($('#userGuess').val()); //Guesses Number
+              if (isNaN(guess) || guess === 0) {
+                alert("Please choose an interger between 1 and 100\nYour previous guess doesn't count toward your total guesses");
+                clearField();
+                counter.innerHTML = 0;
+              }
+              else if (typeof guess == 'number') {
+                appendGuess(guess);
+                hotCold(guess, startingNum);
+                clearField();
+              }        
 
       });
   
@@ -29,19 +34,6 @@ $(document).ready(function(){
       newGame();
     });
 });
-
-
-//numberToGuess = $('.new').click (function(){
-  //       randomNumber();
-    //  });
-
-
-//Random Number
-//function randomNumber(){
-//  startingNum = Math.floor((Math.random() *100) +1);
-//  console.log(startingNum);
-
-//}
 
 //Append guess to list
 function appendGuess(x){
@@ -52,19 +44,19 @@ function appendGuess(x){
 function hotCold(userInput, randomNum){
   if (userInput === randomNum){
     document.getElementById('feedback').innerHTML = 'You Won!';
-    console.log('You Won!');
+    //console.log('You Won!');
   }
   else if (Math.abs(userInput - randomNum) <= 10){
     document.getElementById('feedback').innerHTML = 'Hot';
-    console.log('Hot');
+    //console.log('Hot');
   }
   else if (Math.abs(userInput - randomNum) <= 20) {
     document.getElementById('feedback').innerHTML ='Warm';
-    console.log('warm');
+    //console.log('warm');
   }
   else {
     document.getElementById('feedback').innerHTML = 'Cold';
-  console.log('Cold');
+    //console.log('Cold');
 }
 }
 
@@ -75,13 +67,13 @@ $('#guessButton').click(function(){
   counter.innerHTML++;
 });
 
-    function newGame() {
-      startingNum = Math.floor((Math.random() *100) +1);
-      console.log(startingNum);
-      counter.innerHTML = 0;
-      $('#guessList').empty();
-      document.getElementById('feedback').innerHTML = "Make Your Guess!";
-      clearField();
+function newGame() {
+  startingNum = Math.floor((Math.random() *100) +1);
+  //console.log(startingNum);
+  counter.innerHTML = 0;
+  $('#guessList').empty();
+  document.getElementById('feedback').innerHTML = "Make Your Guess!";
+  clearField();
     }
 
   //clear field
