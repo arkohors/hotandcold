@@ -20,7 +20,7 @@ $(document).ready(function(){
               if (isNaN(guess) || guess === 0) {
                 alert("Please choose an interger between 1 and 100\nYour previous guess doesn't count toward your total guesses");
                 clearField();
-                counter.innerHTML = 0;
+                counter.innerHTML--;
               }
               else if (typeof guess == 'number') {
                 appendGuess(guess);
