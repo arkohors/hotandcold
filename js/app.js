@@ -1,6 +1,11 @@
 
 $(document).ready(function(){
-	
+	'use strict';
+  var startingNum = Math.floor((Math.random() *100) +1);
+  var counter = $("#count");
+  counter.innerHTML = 0;
+
+
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
     	$(".overlay").fadeIn(1000);
@@ -17,15 +22,17 @@ $(document).ready(function(){
 
     $('#guessButton').click(function(){
             var guess = parseInt($('#userGuess').val()); //Guesses Number
-              if (isNaN(guess) || guess === 0) {
+              if (isNaN(guess) || guess === 0 || guess > 100) {
                 alert("Please choose an interger between 1 and 100\nYour previous guess doesn't count toward your total guesses");
                 clearField();
                 counter.innerHTML = 0;
               }
-              else if (typeof guess == 'number') {
+              else {
                 appendGuess(guess);
-                hotCold(guess, startingNum);
+                counter.innerHTML++;
+                hotCold(guess);
                 clearField();
+
               }        
 
       });
@@ -33,50 +40,49 @@ $(document).ready(function(){
     $('.new').click(function(){
       newGame();
     });
-});
+
 
 //Append guess to list
-function appendGuess(x){
-  $('#guessList').append('<li>' + x + '</li>');
+function appendGuess(guess){
+  $('#guessList').append('<li>' + guess + '</li>');
+}
+
+function feedback(message){
+  $('#feedback').text(message);
 }
 
 //hot cold hints
-function hotCold(userInput, randomNum){
-  if (userInput === randomNum){
-    document.getElementById('feedback').innerHTML = 'You Won!';
-    //console.log('You Won!');
+function hotCold(userInput){
+  if (userInput === startingNum){
+   feedback('You Won!');
   }
-  else if (Math.abs(userInput - randomNum) <= 10){
-    document.getElementById('feedback').innerHTML = 'Hot';
-    //console.log('Hot');
+
+  else if (Math.abs(userInput - startingNum) <= 10){
+   feedback('Hot');
   }
-  else if (Math.abs(userInput - randomNum) <= 20) {
-    document.getElementById('feedback').innerHTML ='Warm';
-    //console.log('warm');
+
+  else if (Math.abs(userInput - startingNum) <= 20) {
+   feedback('Warm');
   }
+
   else {
-    document.getElementById('feedback').innerHTML = 'Cold';
-    //console.log('Cold');
-}
+   feedback('Cold');
+  }
+
 }
 
-//Increase counter with every guess
-var counter = document.getElementById("count");
-counter.innerHTML = 0;
-$('#guessButton').click(function(){
-  counter.innerHTML++;
-});
 
 function newGame() {
-  startingNum = Math.floor((Math.random() *100) +1);
-  //console.log(startingNum);
+  var startingNum = Math.floor((Math.random() *100) +1);
+  var counter = $("#count");
   counter.innerHTML = 0;
   $('#guessList').empty();
-  document.getElementById('feedback').innerHTML = "Make Your Guess!";
+  $('#feedback').text("Make Your Guess!");
   clearField();
     }
 
   //clear field
   function clearField(){
-    document.getElementById("userGuess").value ="";
+    $("#userGuess").empty();
   }  
+  });
