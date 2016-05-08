@@ -12,80 +12,61 @@ $(document).ready(function(){
   		$(".overlay").fadeOut(1000);
   	});
 
+    startingNum = Math.floor((Math.random() *100) +1);
+  console.log(startingNum);  
+
+
+$('#guessButton').click(function(){
+            //Guessed number
+            guess = parseInt($('#userGuess').val());
+            appendGuess(guess);
+            hotCold(guess, startingNum);
+      });
   		
-});
-
-
-function newgame {
-	randomNumber(1,100)
-}
-
-
-//New Game Button
-function newgame(){
-	$(".new").click(function(){
-			var startingNumber = randomNumber(0,100);
-			counter.innerHTML = 0;
-			$('.#guessList').empty();
 
 });
 
 
-//When a user clicks the button, refresh the page.
-/*$(".new").click(function(){
-	location.reload();
-});*/
-//Reset the random number
+//numberToGuess = $('.new').click (function(){
+  //       randomNumber();
+    //  });
 
-//Random Number selector
-function randomNumber(min, max){
-	numberToGuess = Math.floor(Math.random()*(max-min))+min;
+
+//Random Number
+//function randomNumber(){
+//  startingNum = Math.floor((Math.random() *100) +1);
+//  console.log(startingNum);
+
+//}
+
+//Append guess to list
+function appendGuess(x){
+  $('#guessList').append('<li>' + x + '</li>');
 }
 
-//Making sure the guess variable is a number
-var guess = parseInt($('#userGuess').val());
-
-
-/*Feedback for input that is not a number */
-
-if (typeof guess == 'number') {
-	hotcold(guess)
+//hot cold hints
+function hotCold(userInput, randomNum){
+  if (userInput === randomNum){
+    document.getElementById('feedback').innerHTML = 'You Won!';
+    console.log('You Won!');
+  }
+  else if (Math.abs(userInput - randomNum) <= 10){
+    document.getElementById('feedback').innerHTML = 'Hot';
+    console.log('Hot');
+  }
+  else if (Math.abs(userInput - randomNum) <= 20) {
+    document.getElementById('feedback').innerHTML ='Warm';
+    console.log('warm');
+  }
+  else {
+    document.getElementById('feedback').innerHTML = 'Cold';
+  console.log('Cold');
 }
-else {
-	alert("Please enter a valid integer");
-}
-
-//Feedback for input that is not between 1 or 100*/
-if (guess < 1 || guess > 101) {
-	alert("Please pick an integer between 1 and 100")
-}
-
-//Feedback for each guess
-function hotcold(){
-if (numberToGuess = guess) {
-	document.getElementById("feedback").innerHTML === "You Won!";
-}
-else if (Math.abs(numberToGuess - guess <= 10) {
-	document.getElementById("feedback").innerHTML === "Hot!";
-}
-else if (Math.abs(numberToGuess - guess <= 20) {
-	document.getElementById("feedback").innerHTML ==== "Kinda Hot!";
 }
 
-//If Guess is greater than abs(20), then say "Cold"
-//If Guess is within abs(20), then say "kinda hot"
-//If Guess is within abs(10), then say "hot"
-
-
-//Append the list of guesses to the ul#guessList
-$('.button').click(function(){
-		$('#guessList').append('<li>' + '</li>');
-});
-
-//Count the number of guesses made by a user
-var btn = document.getElementById("guessButton");
+//Increase counter with every guess
 var counter = document.getElementById("count");
 counter.innerHTML = 0;
-btn.onclick = function (){
-	counter.innerHTML++;
-};
+$('#guessButton').click(function(){
+  counter.innerHTML++;
+});
